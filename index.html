@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        h1 {
+            display: flex;
+            justify-content: center;
+            text-transform: uppercase;
+            font-size: 40px;
+            color: #393532;
+        }
+        #wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            row-gap: 10px;
+        }
+        .element {
+            /*width: 200 px;*/
+        }
+    </style>
+</head>
+<body>
+<h1><span class="line">List of users</span></h1>
+<div id="wrap"></div>
+<script>
+const URL='http://jsonplaceholder.typicode.com/users';
+function foo(url){
+    fetch(url)
+        .then(res=>res.json())
+        .then(data=> {
+            console.log(data)
+            us(data)
+        })
+
+}
+foo(URL)
+function us(users){
+    let wrapper=document.getElementById('wrap');
+    wrapper.innerHTML='';
+    for (let user of users) {
+        let div=document.createElement('div');
+        div.classList.add('element');
+        let button  = document.createElement('button');
+
+        div.innerText = `${user.id} ${user.name}`;
+        button.innerText = 'send';
+        div.appendChild(button);
+        wrapper.appendChild(div);
+
+       button.addEventListener('click',()=>{
+           location.href = 'user.html?id='+user.id;
+           console.log(userId)
+       })
+    }
+}
+</script>
+
+</body>
+</html>

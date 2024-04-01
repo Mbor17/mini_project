@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>USER</title>
+</head>
+<body>
+<h3><a href="index.html">USER</a></h3>
+<div id="wrap"></div>
+<button id="pocu" onclick="pocu()">post of current user</button>
+
+<script>
+    console.log(location)
+    let userId = new URL(location.href).searchParams.get('id');
+    console.log(userId)
+    let baseURL = 'http://jsonplaceholder.typicode.com/users/' + userId;
+
+    function pocu() {
+        fetch(baseURL + '/posts')
+            .then(value => value.json())
+            .then(posts => {
+                    for (let post of posts) {
+                        console.log(post);
+                        let div = document.createElement('div');
+                        div.classList.add('element');
+                        let buttonP = document.createElement('button');
+                        buttonP.innerText = 'postsdetails';
+                        document.body.appendChild(div);
+                        for (let element in post) {
+                            if (element === 'title') {
+                                let p = document.createElement('p');
+                                p.innerText = `${post.id}. ${element} : ${post.title} `;
+                                div.appendChild(p);
+                                div.appendChild(buttonP)
+                            }
+                        }
+                        buttonP.addEventListener('click', () => {
+                            location.href = 'post.html/?id=' + post.id;
+                            console.log(userId)
+                        })
+                    }
+                }
+            )
+    }
+
+    fetch(baseURL).then(res => res.json())
+        .then(data => {
+            // console.log(data)
+            let wrapper = document.createElement('div');
+            document.body.appendChild(wrapper);
+            for (let resultKey in data) {
+                if (resultKey === 'id') {
+                    let h4 = document.createElement('h4')
+                    wrapper.appendChild(h4);
+                    h4.innerText = `${resultKey}:${data[resultKey]}`
+                } else if (resultKey === 'geo') {
+                    for (let kKey of data[resultKey][key]) {
+                        let h5 = document.createElement('h5');
+                        h5.innerText = `${kKey} : ${data[resultKey][kKey]}`;
+                        wrapper.appendChild(h5);
+                    }
+                } else if (resultKey === 'address' || resultKey === 'company') {
+                    for (let key in data[resultKey]) {
+                        let p = document.createElement('p');
+                        wrapper.appendChild(p);
+                        p.innerText = `${key}:${data[resultKey][key]}`
+                    }
+                } else {
+                    let div = document.createElement("div")
+                    wrapper.appendChild(div)
+                    div.innerText = `${resultKey}:${data[resultKey]}`
+                }
+            }
+
+
+        })
+
+
+</script>
+
+</body>
+</html>
