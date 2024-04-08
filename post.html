@@ -12,7 +12,6 @@
 <div id="rap"></div>
 <script>
     console.log(location)
-
     let postId = new URL(location.href).searchParams.get('id');
     console.log(postId)
     let postURL = 'http://jsonplaceholder.typicode.com/posts/' + postId;
@@ -32,8 +31,6 @@
                         wrapper.appendChild(div)
                         div.innerText = `${resultKey}:${data[resultKey]}`
                     }
-
-
                 }
             }
         )
@@ -42,29 +39,17 @@
         .then(comments => {
             console.log(comments)
             for (let comment of comments) {
-                // console.log(comment)
                 let div = document.createElement('div');
                 div.classList.add('elem');
-                // let buttonP = document.createElement('button');
-                // buttonP.innerText = 'postsdetails';
                 document.body.appendChild(div);
                 for (let element in comment) {
                     if (element === 'body') {
-                        let h5 = document.createElement('h5');
-                        h5.innerText = `${comment.id}. ${element} : ${comment.body} `;
-                        div.appendChild(h5);
-                        // div.appendChild(buttonP)
+                        let p = document.createElement('p');
+                        p.innerText = `${comment.id}- ${element} : ${comment.body} `;
+                        div.appendChild(p);
                     }
                 }
-                // buttonP.addEventListener('click', () => {
-                //     location.href = 'post.html/?id=' + post.id;
-                //     console.log(userId)
-                // })
             }
-
-
-
-
         })
 </script>
 

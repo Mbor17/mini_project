@@ -6,11 +6,55 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>USER</title>
+    <style>
+        h1 {
+            display: flex;
+            justify-content: center;
+            text-transform: uppercase;
+            font-size: 40px;
+            color: #393532;
+        }
+
+        .us{
+
+            width: 100vw;
+            display:flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            /*row-gap: 10px;*/
+        }
+        div,p{
+
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            /*row-gap: 10px;*/
+        }
+
+        .line:before, .line:after {
+            display: block;
+            content: '';
+            background-color: #92867b;
+            height: 5px;
+        }
+        button {
+            width:20vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+    </style>
 </head>
 <body>
-<h3><a href="index.html">USER</a></h3>
-<div id="wrap"></div>
-<button id="pocu" onclick="pocu()">post of current user</button>
+<div class="us">
+    <h1><span class="line"><a href="index.html">USER</a></span></h1>
+    <div id="wrap"></div>
+    <button id="pocu" onclick="pocu()">post of current user</button>
+</div>
 
 <script>
     console.log(location)
@@ -48,19 +92,19 @@
 
     fetch(baseURL).then(res => res.json())
         .then(data => {
-            // console.log(data)
             let wrapper = document.createElement('div');
+            // div.classList.add('elem');
             document.body.appendChild(wrapper);
             for (let resultKey in data) {
                 if (resultKey === 'id') {
-                    let h4 = document.createElement('h4')
-                    wrapper.appendChild(h4);
-                    h4.innerText = `${resultKey}:${data[resultKey]}`
+                    let p = document.createElement('p')
+                    wrapper.appendChild(p);
+                    p.innerText = `${resultKey}:${data[resultKey]}`
                 } else if (resultKey === 'geo') {
                     for (let kKey of data[resultKey][key]) {
-                        let h5 = document.createElement('h5');
-                        h5.innerText = `${kKey} : ${data[resultKey][kKey]}`;
-                        wrapper.appendChild(h5);
+                        let p = document.createElement('p');
+                        p.innerText = `${kKey} : ${data[resultKey][key][kKey]}`;
+                        wrapper.appendChild(p);
                     }
                 } else if (resultKey === 'address' || resultKey === 'company') {
                     for (let key in data[resultKey]) {

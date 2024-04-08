@@ -14,14 +14,31 @@
             font-size: 40px;
             color: #393532;
         }
+
         #wrap {
             display: flex;
             flex-direction: column;
             align-items: center;
             row-gap: 10px;
         }
+
+        .line:before, .line:after {
+            display: block;
+            content: '';
+            background-color: #92867b;
+            height: 5px;
+        }
+
         .element {
-            /*width: 200 px;*/
+            width: 150px;
+
+        }
+
+        button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
         }
     </style>
 </head>
@@ -29,36 +46,39 @@
 <h1><span class="line">List of users</span></h1>
 <div id="wrap"></div>
 <script>
-const URL='http://jsonplaceholder.typicode.com/users';
-function foo(url){
-    fetch(url)
-        .then(res=>res.json())
-        .then(data=> {
-            console.log(data)
-            us(data)
-        })
+    const URL = 'http://jsonplaceholder.typicode.com/users';
 
-}
-foo(URL)
-function us(users){
-    let wrapper=document.getElementById('wrap');
-    wrapper.innerHTML='';
-    for (let user of users) {
-        let div=document.createElement('div');
-        div.classList.add('element');
-        let button  = document.createElement('button');
+    function foo(url) {
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                us(data)
+            })
 
-        div.innerText = `${user.id} ${user.name}`;
-        button.innerText = 'send';
-        div.appendChild(button);
-        wrapper.appendChild(div);
-
-       button.addEventListener('click',()=>{
-           location.href = 'user.html?id='+user.id;
-           console.log(userId)
-       })
     }
-}
+
+    foo(URL)
+
+    function us(users) {
+        let wrapper = document.getElementById('wrap');
+        wrapper.innerHTML = '';
+        for (let user of users) {
+            let div = document.createElement('div');
+            div.classList.add('element');
+            let button = document.createElement('button');
+
+            div.innerText = `${user.id} ${user.name}`;
+            button.innerText = 'send';
+            div.appendChild(button);
+            wrapper.appendChild(div);
+
+            button.addEventListener('click', () => {
+                location.href = 'user.html?id=' + user.id;
+                console.log(userId)
+            })
+        }
+    }
 </script>
 
 </body>
